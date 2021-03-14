@@ -91,12 +91,16 @@ function PublicPage() {
     isError,
     isIdle,
     isSuccess,
-  } = useAsync(React.useCallback(() => client("/posts"), []));
+  } = useAsync();
+
+  React.useEffect(() => {
+    execute(() => client("/posts"));
+  }, [execute]);
 
   return (
     <>
       <h1>Public Page</h1>
-      <button onClick={execute}>Click me</button>
+      <button onClick={() => execute(() => client("/posts"))}>Click me</button>
       {isIdle && "Click button to fetch API"}
       {isLoading && "Loading..."}
       {isError && error.message}
