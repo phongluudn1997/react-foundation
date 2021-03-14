@@ -10,7 +10,6 @@ import {
 import { useAuth } from "./context/auth-context";
 import { useAsync } from "./hooks/useAsync";
 import { client } from "./api-client/index";
-import axios from "axios";
 
 function App() {
   return (
@@ -94,13 +93,13 @@ function PublicPage() {
   } = useAsync();
 
   React.useEffect(() => {
-    execute(client("/postss"));
+    execute(client("/posts"));
   }, [execute]);
 
   return (
     <>
       <h1>Public Page</h1>
-      <button onClick={() => client("/postss")}>Click me</button>
+      <button onClick={() => client("/posts")}>Click me</button>
       {isIdle && "Click button to fetch API"}
       {isLoading && "Loading..."}
       {isError && error.message}

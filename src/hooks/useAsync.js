@@ -1,5 +1,24 @@
 import * as React from "react";
 
+/**
+ * Usage:
+  const {
+    execute,
+    data,
+    error,
+    isLoading,
+    isError,
+    isIdle,
+    isSuccess,
+  } = useAsync();
+
+  React.useEffect(() => {
+    execute(client("/posts"));
+  }, [execute]);
+
+ * 
+ */
+
 function useAsync() {
   const [data, setData] = React.useState(null);
   const [status, setStatus] = React.useState("idle");
