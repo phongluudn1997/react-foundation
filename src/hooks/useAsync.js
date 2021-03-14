@@ -5,19 +5,21 @@ function useAsync(asyncFunction) {
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
 
+  React.useReducer();
+
   const execute = () => {
     setStatus("pending");
     setData(null);
     setError(null);
 
-    asyncFunction
+    asyncFunction()
       .then((response) => {
         setData(response);
         setStatus("success");
       })
       .catch((error) => {
-        setStatus("error");
         setError(error);
+        setStatus("error");
       });
   };
 

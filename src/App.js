@@ -90,12 +90,7 @@ function PublicPage() {
     isError,
     isIdle,
     isSuccess,
-  } = useAsync(client("/posts"));
-
-  if (isSuccess) {
-    console.log(data);
-    debugger;
-  }
+  } = useAsync(() => client("/posts"));
 
   return (
     <>
@@ -104,6 +99,13 @@ function PublicPage() {
       {isIdle && "Click button to fetch API"}
       {isLoading && "Loading..."}
       {isError && error.message}
+      {isSuccess && (
+        <ul>
+          {data.map((post) => (
+            <li key={post.id}>{post.title}</li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

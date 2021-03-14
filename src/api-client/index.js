@@ -17,10 +17,9 @@ const client = async (endpoint, { data, token, headers, ...config } = {}) => {
     });
     return responseData;
   } catch (error) {
-    Promise.reject(error.response.data.error);
+    // return error.response;
+    return Promise.reject(error.response.data);
   }
-
-  return data;
 };
 
 export { client };
