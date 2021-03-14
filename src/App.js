@@ -10,6 +10,7 @@ import {
 import { useAuth } from "./context/auth-context";
 import { useAsync } from "./hooks/useAsync";
 import { client } from "./api-client/index";
+import axios from "axios";
 
 function App() {
   return (
@@ -90,7 +91,7 @@ function PublicPage() {
     isError,
     isIdle,
     isSuccess,
-  } = useAsync(() => client("/posts"));
+  } = useAsync(React.useCallback(() => client("/posts"), []));
 
   return (
     <>

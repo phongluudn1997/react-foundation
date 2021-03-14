@@ -17,7 +17,6 @@ const client = async (endpoint, { data, token, headers, ...config } = {}) => {
     });
     return responseData;
   } catch (error) {
-    // return error.response;
     return Promise.reject(error.response.data);
   }
 };

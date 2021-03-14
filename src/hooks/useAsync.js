@@ -1,18 +1,16 @@
 import * as React from "react";
 
-function useAsync(asyncFunction) {
+function useAsync(asyncFunction, immediate = true) {
   const [data, setData] = React.useState(null);
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
 
-  React.useReducer();
-
-  const execute = () => {
+  const execute = React.useCallback(() => {
     setStatus("pending");
     setData(null);
     setError(null);
 
-    asyncFunction()
+    return asyncFunction()
       .then((response) => {
         setData(response);
         setStatus("success");
@@ -21,7 +19,13 @@ function useAsync(asyncFunction) {
         setError(error);
         setStatus("error");
       });
-  };
+  }, [asyncFunction]);
+
+  React.useEffect(() => {
+    if (immediate) {
+      execute();
+    }
+  }, [execute, immediate]);
 
   const isLoading = status === "pending";
   const isError = status === "error";
