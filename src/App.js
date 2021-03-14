@@ -7,6 +7,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import { useAuth } from "./context/auth-context";
+import { useAsync } from "./hooks/useAsync";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function LoginPage(props) {
 }
 
 function PublicPage() {
+  const { execute, value, isLoading, isError, isIdle } = useAsync();
   return <h1>Public Page</h1>;
 }
 

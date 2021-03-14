@@ -1,18 +1,18 @@
 import * as React from "react";
 
 function useAsync(asyncFunction) {
-  const [value, setValue] = React.useState(null);
+  const [data, setData] = React.useState(null);
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
 
   const execute = () => {
     setStatus("pending");
-    setValue(null);
+    setData(null);
     setError(null);
 
     asyncFunction
       .then((response) => {
-        setValue(response);
+        setData(response);
         setStatus("success");
       })
       .catch((error) => {
@@ -21,7 +21,11 @@ function useAsync(asyncFunction) {
       });
   };
 
-  return { execute, value, status, error };
+  const isLoading = status === "pending";
+  const isError = status === "error";
+  const isIdle = status === "idle";
+
+  return { execute, data, status, error, isLoading, isError, isIdle };
 }
 
 export { useAsync };
