@@ -24,8 +24,18 @@ function useAsync(asyncFunction) {
   const isLoading = status === "pending";
   const isError = status === "error";
   const isIdle = status === "idle";
+  const isSuccess = status === "success";
 
-  return { execute, data, status, error, isLoading, isError, isIdle };
+  return {
+    execute,
+    data,
+    status,
+    error,
+    isSuccess,
+    isLoading,
+    isError,
+    isIdle,
+  };
 }
 
 export { useAsync };

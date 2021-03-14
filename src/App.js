@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Route,
   Switch,
@@ -8,6 +9,7 @@ import {
 } from "react-router-dom";
 import { useAuth } from "./context/auth-context";
 import { useAsync } from "./hooks/useAsync";
+import { client } from "./api-client/index";
 
 function App() {
   return (
@@ -80,8 +82,30 @@ function LoginPage(props) {
 }
 
 function PublicPage() {
-  const { execute, value, isLoading, isError, isIdle } = useAsync();
-  return <h1>Public Page</h1>;
+  const {
+    execute,
+    data,
+    error,
+    isLoading,
+    isError,
+    isIdle,
+    isSuccess,
+  } = useAsync(client("/posts"));
+
+  if (isSuccess) {
+    console.log(data);
+    debugger;
+  }
+
+  return (
+    <>
+      <h1>Public Page</h1>
+      <button onClick={execute}>Click me</button>
+      {isIdle && "Click button to fetch API"}
+      {isLoading && "Loading..."}
+      {isError && error.message}
+    </>
+  );
 }
 
 function ProtectedPage() {
