@@ -94,13 +94,13 @@ function PublicPage() {
   } = useAsync();
 
   React.useEffect(() => {
-    execute(() => client("/posts"));
+    execute(client("/postss"));
   }, [execute]);
 
   return (
     <>
       <h1>Public Page</h1>
-      <button onClick={() => execute(() => client("/posts"))}>Click me</button>
+      <button onClick={() => client("/postss")}>Click me</button>
       {isIdle && "Click button to fetch API"}
       {isLoading && "Loading..."}
       {isError && error.message}

@@ -10,7 +10,7 @@ function useAsync() {
     setData(null);
     setError(null);
 
-    return promise()
+    return promise
       .then((response) => {
         setData(response);
         setStatus("success");
