@@ -99,7 +99,7 @@ function PublicPage() {
   return (
     <>
       <h1>Public Page</h1>
-      <button onClick={() => client("/posts")}>Click me</button>
+      <button onClick={() => execute(client("/posts"))}>Click me</button>
       {isIdle && "Click button to fetch API"}
       {isLoading && "Loading..."}
       {isError && error.message}
