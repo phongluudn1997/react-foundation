@@ -48,6 +48,7 @@ function useAsync() {
   return {
     execute,
     data,
+    setData,
     status,
     error,
     isSuccess,

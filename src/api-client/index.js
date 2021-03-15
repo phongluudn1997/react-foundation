@@ -8,6 +8,7 @@ const client = async (endpoint, { data, token, headers, ...config } = {}) => {
       baseURL: API_URL,
       url: endpoint,
       method: data ? "post" : "get",
+      data: data ?? undefined,
       headers: {
         "Content-Type": data ? "application/json" : undefined,
         Authorization: token ? `Bearer ${token}` : undefined,

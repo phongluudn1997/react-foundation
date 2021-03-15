@@ -44,7 +44,6 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) => {
-        console.log("USER", user);
         return user ? (
           children
         ) : (
@@ -59,7 +58,7 @@ function AuthButton() {
   const { user, logout } = useAuth();
   return user ? (
     <div>
-      Welcome! <button onClick={() => logout()}>Log out</button>
+      Welcome {user.email}! <button onClick={() => logout()}>Log out</button>
     </div>
   ) : (
     "You are not logged in"
@@ -67,16 +66,41 @@ function AuthButton() {
 }
 
 function LoginPage(props) {
+  const { isLoading, isError, error, execute } = useAsync();
   const location = useLocation();
   const history = useHistory();
   const auth = useAuth();
   const { from } = location.state || { from: { pathname: "/" } };
   console.log({ location, history });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+    execute(
+      auth.login(
+        {
+          email: email.value,
+          password: password.value,
+        },
+        () => history.replace(from)
+      )
+    );
+  };
+
   return (
     <div>
-      <button onClick={() => auth.login(() => history.replace(from))}>
-        Login
-      </button>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="email" />
+        <input type="password" name="password" />
+        <button type="submit" disabled={isLoading}>
+          Submit
+        </button>
+      </form>
+      {isError && (
+        <div>
+          <pre>{error.message}</pre>
+        </div>
+      )}
     </div>
   );
 }
