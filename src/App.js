@@ -11,6 +11,7 @@ import {
 import { useAuth } from "./context/auth-context";
 import { useAsync } from "utils/hooks";
 import { client } from "utils/api-client";
+import { Discover } from "screens/discover";
 
 function App() {
   const { user } = useAuth();
@@ -36,7 +37,6 @@ function App() {
           <AppRoutes />
         </main>
       </div>
-      <AppRoutes />
     </>
   );
 }
@@ -85,6 +85,9 @@ function AppRoutes() {
       <PrivateRoute path="/protected">
         <ProtectedPage />
       </PrivateRoute>
+      <Route path="/discover">
+        <Discover />
+      </Route>
     </Switch>
   );
 }
