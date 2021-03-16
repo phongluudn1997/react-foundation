@@ -8,8 +8,8 @@ import {
   useHistory,
 } from "react-router-dom";
 import { useAuth } from "./context/auth-context";
-import { useAsync } from "./hooks/useAsync";
-import { client } from "./api-client/index";
+import { useAsync } from "utils/hooks";
+import { client } from "utils/api-client";
 
 function App() {
   return (

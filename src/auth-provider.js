@@ -1,4 +1,4 @@
-import { client } from "api-client";
+import { client } from "utils/api-client";
 
 const localStorageKey = "__auth_provider_token__";
 

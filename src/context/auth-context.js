@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as auth from "auth-provider";
-import { useAsync } from "hooks/useAsync";
-import { client } from "api-client";
+import { useAsync } from "utils/hooks";
+import { client } from "utils/api-client";
 
 const AuthContext = React.createContext();
 
