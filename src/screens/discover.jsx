@@ -26,8 +26,6 @@ function Discover() {
     setQuery(e.target.elements.search.value);
   };
 
-  console.log(data);
-
   return (
     <div>
       <div>
@@ -62,13 +60,14 @@ function Discover() {
 }
 
 function BookRow({ book }) {
-  const { title, author, coverImageUrl, publisher, synopsis } = book;
+  const { title, author, coverImageUrl, publisher, synopsis, _id } = book;
 
   return (
     <div className="flex items-center justify-end">
       <Link
         className="grid gap-5 border border-gray-200 rounded-sm p-5"
         style={{ gridTemplateColumns: "140px 1fr" }}
+        to={`/books/${_id}`}
       >
         <div>
           <img src={coverImageUrl} alt="Book" />
@@ -76,7 +75,7 @@ function BookRow({ book }) {
         <div>
           <div className="flex justify-between">
             <div className="flex-1">
-              <h2>{title}</h2>
+              <h2 className="text-lg text-indigo-700 font-bold">{title}</h2>
             </div>
             <div className="ml-2">
               <div className="italic text-sm">{author}</div>
