@@ -12,6 +12,7 @@ import { useAuth } from "./context/auth-context";
 import { useAsync } from "utils/hooks";
 import { client } from "utils/api-client";
 import { Discover } from "screens/discover";
+import { Book } from "screens/book";
 
 function App() {
   const { user } = useAuth();
@@ -87,6 +88,9 @@ function AppRoutes() {
       </PrivateRoute>
       <Route path="/discover">
         <Discover />
+      </Route>
+      <Route path="/books/:_id">
+        <Book />
       </Route>
     </Switch>
   );
