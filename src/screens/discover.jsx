@@ -28,7 +28,7 @@ function Discover() {
 
   return (
     <div>
-      <div>
+      <div className="mb-4">
         <form onSubmit={handleSearchClick}>
           <Input name="search" placeholder="Search books..." />
         </form>
