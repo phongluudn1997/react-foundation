@@ -5,8 +5,8 @@ import { client } from "utils/api-client";
 
 function Book() {
   const { _id } = useParams();
-  const { data: book, isLoading, isIdle, execute } = useAsync();
-  console.log(book?.data.book._id);
+  const { data, isLoading, isIdle, execute } = useAsync();
+  const book = data?.data.book;
 
   React.useEffect(() => {
     execute(client(`/books/${_id}`));
