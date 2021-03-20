@@ -13,7 +13,8 @@ import { useAsync } from "utils/hooks";
 import { client } from "utils/api-client";
 import { Discover } from "screens/discover";
 import { Book } from "screens/book";
-
+import { ErrorBoundary } from "react-error-boundary";
+import { FullPageErrorFallback } from "components/lib";
 function App() {
   const { user } = useAuth();
   return (
@@ -35,7 +36,9 @@ function App() {
       >
         <Nav />
         <main>
-          <AppRoutes />
+          <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
+            <AppRoutes />
+          </ErrorBoundary>
         </main>
       </div>
     </>
