@@ -14,7 +14,8 @@ import { client } from "utils/api-client";
 import { Discover } from "screens/discover";
 import { Book } from "screens/book";
 import { ErrorBoundary } from "react-error-boundary";
-import { FullPageErrorFallback } from "components/lib";
+import { FullPageErrorFallback, FormGroup, Input } from "components/lib";
+import { Modal, ModalContent, ModalOpenButton } from "components/modal";
 
 function App() {
   return (
@@ -38,16 +39,54 @@ function App() {
 }
 
 function AuthButton() {
-  const { user } = useAuth();
+  const { user, login, logout } = useAuth();
+
+  const { data, error, isLoading, execute } = useAsync();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+    execute(
+      login({ email: email.value, password: password.value }, () => {
+        console.log("Logined");
+      })
+    );
+  };
 
   return user ? (
     <>
       <div>{user.email}</div>
-      <button className="p-2 bg-gray-100 rounded-sm">Logout</button>
+      <button className="p-2 bg-gray-100 rounded-sm" onClick={logout}>
+        Logout
+      </button>
     </>
   ) : (
     <>
-      <button className="p-2 bg-gray-100 rounded-sm">Login</button>
+      <Modal>
+        <ModalOpenButton>
+          <button className="p-2 bg-gray-100 rounded-sm">Login</button>
+        </ModalOpenButton>
+        <ModalContent>
+          <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+            <FormGroup>
+              <label>Email</label>
+              <Input type="text" name="email" />
+            </FormGroup>
+            <FormGroup>
+              <label>Password</label>
+              <Input type="password" name="password" />
+            </FormGroup>
+            <button
+              className="self-end px-3 py-2 bg-indigo-700 text-white rounded-md"
+              type="submit"
+            >
+              Submit
+              {isLoading ? "..." : null}
+            </button>
+          </form>
+          {error ? <pre>{error.message}</pre> : null}
+        </ModalContent>
+      </Modal>
     </>
   );
 }
