@@ -2,19 +2,25 @@ import * as React from "react";
 import * as auth from "auth-provider";
 import { useAsync } from "utils/hooks";
 import { client } from "utils/api-client";
+import { FullPageErrorFallback } from "components/lib";
 
 const AuthContext = React.createContext();
 
 const bootstrapApp = async () => {
   const token = await auth.getToken();
-  const data = await client("/users/bootstrap", { token });
-  return data.user;
+  let user = null;
+  if (token) {
+    const data = await client("/users/bootstrap", { token });
+    user = data.user;
+  }
+  return user;
 };
 
 function AuthProvider(props) {
   const {
     data: user,
     setData: setUser,
+    error,
     status,
     execute,
     isLoading,
@@ -49,8 +55,11 @@ function AuthProvider(props) {
 
   if (isLoading || isIdle) return <div>Loading...</div>;
 
-  if (isSuccess || isError)
-    return <AuthContext.Provider value={value} {...props} />;
+  if (isSuccess) return <AuthContext.Provider value={value} {...props} />;
+
+  if (isError) {
+    return <FullPageErrorFallback error={error} />;
+  }
 
   throw Error(`Unhandle with status ${status}`);
 }
