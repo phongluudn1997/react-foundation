@@ -15,20 +15,12 @@ import { Discover } from "screens/discover";
 import { Book } from "screens/book";
 import { ErrorBoundary } from "react-error-boundary";
 import { FullPageErrorFallback } from "components/lib";
+
 function App() {
-  const { user } = useAuth();
   return (
     <>
-      <AuthButton />
       <div className="flex items-center gap-2 absolute top-5 right-5">
-        {user ? (
-          <>
-            <div>{user.email}</div>
-            <button className="p-2 bg-gray-100 rounded-sm">Logout</button>
-          </>
-        ) : (
-          <button className="p-2 bg-gray-100 rounded-sm">Login</button>
-        )}
+        <AuthButton />
       </div>
       <div
         className="w-full max-w-4xl grid gap-2 my-0 mx-auto py-4 px-2"
@@ -41,6 +33,21 @@ function App() {
           </ErrorBoundary>
         </main>
       </div>
+    </>
+  );
+}
+
+function AuthButton() {
+  const { user } = useAuth();
+
+  return user ? (
+    <>
+      <div>{user.email}</div>
+      <button className="p-2 bg-gray-100 rounded-sm">Logout</button>
+    </>
+  ) : (
+    <>
+      <button className="p-2 bg-gray-100 rounded-sm">Login</button>
     </>
   );
 }
@@ -112,17 +119,6 @@ function PrivateRoute({ children, ...rest }) {
         );
       }}
     />
-  );
-}
-
-function AuthButton() {
-  const { user, logout } = useAuth();
-  return user ? (
-    <div>
-      Welcome {user.email}! <button onClick={() => logout()}>Log out</button>
-    </div>
-  ) : (
-    "You are not logged in"
   );
 }
 
